@@ -60,12 +60,15 @@ public class Main {
             //Посчитать средний балл по всем предметам студента
             System.out.println(university.getAverageMarkByStudent("ivan ivanov"));
 
-            //Посчитать средний балл по конкретному предмету в конкретной группе и на конкретном факультете
-            System.out.println(university.getAverageMarkByFacultyByGroupBySubject("english faculty",
+            //Посчитать средний балл по конкретному предмету в
+            // конкретной группе и на конкретном факультете
+            System.out.println(university.
+                    getAverageMarkByFacultyByGroupBySubject("english faculty",
                     "22a", Subject.ENGLISH));
 
             //Посчитать средний балл по предмету для всего университета
             System.out.println(university.getAverageMarkInUniversityBySubject(Subject.ENGLISH));
+
 
 
 

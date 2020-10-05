@@ -69,8 +69,7 @@ public class Group {
                 amountOfStudentsWithMarkedSubject--;
             }
         }
-        //если ни у кого нету оценок, что бы не возвращать ноль
-        //выбрасывается исклюбчение отсутствия предметов
+
         if(amountOfStudentsWithMarkedSubject == 0)
             throw new AbsentSubjectException();
         return average/amountOfStudentsWithMarkedSubject;

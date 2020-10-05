@@ -37,14 +37,16 @@ public class University {
         this.facultySet = facultySet;
     }
 
-    public double getAverageMarkByStudent(String name) throws AbsentStudentException {
+    public double getAverageMarkByStudent(String name)
+            throws AbsentStudentException, AbsentSubjectException {
+
         double average = 0;
         int count = 0;
         for(Faculty faculty : facultySet){
             count++;
             try {
                average = faculty.getStudentByNameInFaculty(name).getAverageMarkInAllSubjects();
-            } catch (UniversityException e) {
+            } catch (AbsentStudentException e) {
                 if(average == 0 && count == facultySet.size())
                     throw new AbsentStudentException();
             }
@@ -54,19 +56,29 @@ public class University {
     }
 
     public double getAverageMarkInUniversityBySubject(Subject subject)
-            throws AbsentFacultyException, AbsentSubjectException, AbsentGroupException, AbsentStudentException {
+            throws UniversityException {
 
         if(facultySet.isEmpty()) throw new AbsentFacultyException();
 
         double average = 0;
+        int amountOfFacWthSubj = facultySet.size();
         for(Faculty faculty : facultySet){
-            average += faculty.getAverageMarkInFacultyBySubject(subject);
+            try {
+                average += faculty.getAverageMarkInFacultyBySubject(subject);
+            } catch (AbsentSubjectException e) {
+                amountOfFacWthSubj--;
+            }
         }
-        return average/facultySet.size();
+
+        if(amountOfFacWthSubj == 0) throw new AbsentSubjectException();
+
+        return average/amountOfFacWthSubj;
     }
 
-    public double getAverageMarkByFacultyByGroupBySubject(String nameOfFaculty, String nameOfGroup, Subject subject)
-            throws AbsentFacultyException, AbsentSubjectException, AbsentGroupException, AbsentStudentException {
+    public double getAverageMarkByFacultyByGroupBySubject(String nameOfFaculty,
+                                                          String nameOfGroup, Subject subject)
+            throws AbsentFacultyException, AbsentSubjectException, AbsentGroupException,
+            AbsentStudentException {
 
         if(facultySet.isEmpty()) throw new AbsentFacultyException();
 
@@ -78,7 +90,7 @@ public class University {
         return faculties.get(0).getAverageMarkInEnteredGroupBySubject(nameOfGroup, subject);
     }
 
-    public double getAverageMarkInUniversity() throws AbsentSubjectException,
+    public double getAverageMarkInUniversity() throws
             AbsentGroupException, AbsentStudentException {
         double average = 0;
 

@@ -27,6 +27,7 @@ public class Student implements Comparable<Student>{
     }
 
     public void addMark(Subject subject, int mark) throws InvalidMarkException {
+
         if(mark < 0 || mark > 10) throw new InvalidMarkException();
         if(marksMap.containsKey(subject)){
             marksMap.get(subject).add(mark);

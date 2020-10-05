@@ -54,10 +54,12 @@ public class Faculty {
     }
 
     public Group getGroupByName(String name) throws AbsentGroupException {
-            ArrayList<Group> groups = new ArrayList<>();
-            groups = (ArrayList<Group>) groupSet.stream().
+
+            ArrayList<Group> groups = (ArrayList<Group>) groupSet.stream().
                 filter(o -> o.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
+
             if(groups.isEmpty()) throw new AbsentGroupException();
+
             else return groups.get(0);
     }
 
