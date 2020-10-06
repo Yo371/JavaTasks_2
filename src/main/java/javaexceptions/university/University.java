@@ -5,6 +5,7 @@ import javaexceptions.subjects.Subject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -99,6 +100,20 @@ public class University {
         }
 
         return average/facultySet.size();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        University that = (University) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(facultySet, that.facultySet);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, facultySet);
     }
 
     @Override
