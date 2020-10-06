@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class Group {
     private String name;
-    private Set<Student> studentSet; //использовал Set что бы исключить добавление одного и того же студента
+    private Set<Student> studentSet;
 
     public Group(String name, TreeSet<Student> studentSet) {
         this.name = name;
