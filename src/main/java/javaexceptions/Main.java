@@ -70,8 +70,6 @@ public class Main {
             System.out.println(university.getAverageMarkInUniversityBySubject(Subject.ENGLISH));
 
 
-
-
         } catch (UniversityException e) {
             e.printStackTrace();
         }

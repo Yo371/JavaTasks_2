@@ -37,14 +37,6 @@ public class Group {
         return studentSet;
     }
 
-    /*public Student getStudentByNameInGroup(String name) throws AbsentStudentException {
-        if(studentSet.isEmpty()) throw new AbsentStudentException();
-        ArrayList<Student> arrayList = (ArrayList<Student>) studentSet.stream()
-                .filter(o -> o.getName().equalsIgnoreCase(name))
-                .collect(Collectors.toList());
-        if(arrayList.isEmpty()) throw new AbsentStudentException();
-        else return  arrayList.get(0);
-    }*/
 
     public Student getStudentByNameInGroup(String name) throws AbsentStudentException {
         if(studentSet.isEmpty()) throw new AbsentStudentException();
