@@ -64,7 +64,7 @@ public class Main {
             // конкретной группе и на конкретном факультете
             System.out.println(university.
                     getAverageMarkByFacultyByGroupBySubject("english faculty",
-                    "22a", Subject.ENGLISH));
+                            "22a", Subject.ENGLISH));
 
             //Посчитать средний балл по предмету для всего университета
             System.out.println(university.getAverageMarkInUniversityBySubject(Subject.ENGLISH));

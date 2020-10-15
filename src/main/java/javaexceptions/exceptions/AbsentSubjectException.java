@@ -1,4 +1,4 @@
 package javaexceptions.exceptions;
 
-public class AbsentSubjectException extends UniversityException{
+public class AbsentSubjectException extends UniversityException {
 }

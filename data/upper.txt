@@ -1,0 +1,87 @@
+PACKAGE com.COMPANY;
+
+IMPORT java.io.*;
+IMPORT java.util.ARRAYS;
+
+PRIVATE CLASS FILEEXECUTOR {
+
+    PRIVATE STATIC void WRITETREETOFILEBYFOLDERPATH(File file, File FILEOUT) {
+
+        if (!file.ISDIRECTORY()) THROW new ILLEGALARGUMENTEXCEPTION("This is not FOLDER path");
+        if (file.LISTFILES() == null) THROW new ILLEGALARGUMENTEXCEPTION("FOLDER is EMPTY");
+
+        try (BUFFEREDWRITER BUFFEREDWRITER = new BUFFEREDWRITER(new FILEWRITER(FILEOUT))) {
+            /*for(File FILEINLIST : file.LISTFILES()){
+                if(!FILEINLIST.ISHIDDEN())
+                BUFFEREDWRITER.WRITE(PRINT(FILEINLIST, 0));
+            }*/
+            ARRAYS.STREAM(file.LISTFILES()).FILTER(e -> !e.ISHIDDEN()).FOREACH(e -> {
+                try {
+                    BUFFEREDWRITER.WRITE(PRINT(e, 0));
+                } CATCH (IOEXCEPTION IOEXCEPTION) {
+                    IOEXCEPTION.PRINTSTACKTRACE();
+                }
+            });
+
+        } CATCH (IOEXCEPTION e) {
+            e.PRINTSTACKTRACE();
+        }
+    }
+
+    PRIVATE STATIC STRING PRINT(File file, int nest) {
+        STRINGBUILDER sb = new STRINGBUILDER();
+
+        sb.APPEND(GETNASTEDSPACE(nest++));
+
+        if (file.ISDIRECTORY())
+            sb.APPEND("|--").APPEND(file.GETNAME()).APPEND("\n");
+        else
+            sb.APPEND(file.GETNAME()).APPEND("\n");
+
+        if (file.ISDIRECTORY() && file.LISTFILES() != null) {
+            for (File FILEINARR : file.LISTFILES())
+                sb.APPEND(PRINT(FILEINARR, nest));
+        }
+
+        RETURN sb.TOSTRING();
+    }
+
+
+    PRIVATE STATIC STRING GETNASTEDSPACE(int NESTING) {
+        STRINGBUILDER sb = new STRINGBUILDER();
+
+        for (int i = 0; i < NESTING; i++)
+            sb.APPEND("|  ");
+
+        RETURN sb.TOSTRING();
+    }
+
+    PRIVATE STATIC STRING GETINFO(File file) {
+
+        STRINGBUILDER sb = new STRINGBUILDER();
+
+        try (BUFFEREDREADER br = new BUFFEREDREADER(new FILEREADER(file))) {
+
+            int FOLDERS = 0, FILES = 0, LENGTH = 0;
+            STRING line;
+            WHILE ((line = br.READLINE()) != null) {
+                if (line.CONTAINS("--")) FOLDERS++;
+                else {
+                    FILES++;
+                    line = line.REPLACEALL("[|]", "").trim();
+                    LENGTH += line.SUBSTRING(0, line.LASTINDEXOF(".")).LENGTH();
+                }
+            }
+            sb.APPEND(STRING.FORMAT("FOLDERS = %d, FILES = %d", FOLDERS, FILES))
+                    .APPEND(STRING.FORMAT(" \NAVERAGE AMOUNT of FILES in FOLDERS = %.2f", (DOUBLE) FILES / FOLDERS))
+                    .APPEND(STRING.FORMAT(" AVERAGE LENGTH of file's name = %.2f", (DOUBLE) LENGTH / FILES));
+
+
+        } CATCH (IOEXCEPTION e) {
+            e.PRINTSTACKTRACE();
+        }
+        RETURN sb.TOSTRING();
+    }
+
+
+}

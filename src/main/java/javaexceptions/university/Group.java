@@ -4,8 +4,10 @@ import javaexceptions.exceptions.AbsentStudentException;
 import javaexceptions.exceptions.AbsentSubjectException;
 import javaexceptions.subjects.Subject;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Group {
     private String name;
@@ -20,26 +22,24 @@ public class Group {
         this.studentSet = new TreeSet<>();
     }
 
+    public String getName() {
+        return name;
+    }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setStudentSet(TreeSet<Student> studentSet) {
-        this.studentSet = studentSet;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Set<Student> getStudentSet() {
         return studentSet;
     }
 
+    public void setStudentSet(TreeSet<Student> studentSet) {
+        this.studentSet = studentSet;
+    }
 
     public Student getStudentByNameInGroup(String name) throws AbsentStudentException {
-        if(studentSet.isEmpty()) throw new AbsentStudentException();
+        if (studentSet.isEmpty()) throw new AbsentStudentException();
 
         return Optional.of(studentSet.stream()
                 .filter(e -> e.getName().equalsIgnoreCase(name)).findAny()
@@ -49,11 +49,11 @@ public class Group {
 
     public double getAverageMarkInGroupBySubject(Subject subject)
             throws AbsentStudentException, AbsentSubjectException {
-        if(studentSet.isEmpty()) throw new AbsentStudentException();
+        if (studentSet.isEmpty()) throw new AbsentStudentException();
 
         double average = 0, value;
         int amountOfStudentsWithMarkedSubject = studentSet.size();
-        for(Student student : studentSet){
+        for (Student student : studentSet) {
             try {
                 value = student.getAverageMarkBySubject(subject);
                 average += value;
@@ -62,25 +62,25 @@ public class Group {
             }
         }
 
-        if(amountOfStudentsWithMarkedSubject == 0)
+        if (amountOfStudentsWithMarkedSubject == 0)
             throw new AbsentSubjectException();
-        return average/amountOfStudentsWithMarkedSubject;
+        return average / amountOfStudentsWithMarkedSubject;
     }
 
     public double getAverageMarkInWholeGroup() throws AbsentStudentException {
-        if(studentSet.isEmpty()) throw new AbsentStudentException();
+        if (studentSet.isEmpty()) throw new AbsentStudentException();
 
         double average = 0;
         int amountOfStudentsWithMarkedSubjects = studentSet.size();
 
-        for(Student student : studentSet){
+        for (Student student : studentSet) {
             try {
                 average += student.getAverageMarkInAllSubjects();
             } catch (AbsentSubjectException e) {
                 amountOfStudentsWithMarkedSubjects--;
             }
         }
-        return average/amountOfStudentsWithMarkedSubjects;
+        return average / amountOfStudentsWithMarkedSubjects;
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Student implements Comparable<Student>{
+public class Student implements Comparable<Student> {
     private String name;
     private Map<Subject, ArrayList<Integer>> marksMap;
 
@@ -28,10 +28,10 @@ public class Student implements Comparable<Student>{
 
     public void addMark(Subject subject, int mark) throws InvalidMarkException {
 
-        if(mark < 0 || mark > 10) throw new InvalidMarkException();
-        if(marksMap.containsKey(subject)){
+        if (mark < 0 || mark > 10) throw new InvalidMarkException();
+        if (marksMap.containsKey(subject)) {
             marksMap.get(subject).add(mark);
-        }else{
+        } else {
             marksMap.put(subject, new ArrayList<>());
             marksMap.get(subject).add(mark);
         }
@@ -43,30 +43,30 @@ public class Student implements Comparable<Student>{
 
     //Посчитать средний балл по всем предметам студента
     public double getAverageMarkInAllSubjects() throws AbsentSubjectException {
-        if(marksMap.isEmpty()) throw new AbsentSubjectException();
+        if (marksMap.isEmpty()) throw new AbsentSubjectException();
 
-            ArrayList<Integer> marks = new ArrayList<>();
+        ArrayList<Integer> marks = new ArrayList<>();
 
-            for(Map.Entry entry : marksMap.entrySet())
-                marks.addAll((ArrayList<Integer>) entry.getValue());
+        for (Map.Entry entry : marksMap.entrySet())
+            marks.addAll((ArrayList<Integer>) entry.getValue());
 
-            return getAverageMarkInArrList(marks);
+        return getAverageMarkInArrList(marks);
 
     }
 
     public double getAverageMarkBySubject(Subject subject) throws AbsentSubjectException {
-        if(!marksMap.containsKey(subject)) throw new AbsentSubjectException();
+        if (!marksMap.containsKey(subject)) throw new AbsentSubjectException();
 
         return getAverageMarkInArrList(marksMap.get(subject));
 
     }
 
-    private double getAverageMarkInArrList(ArrayList<Integer> marks){
+    private double getAverageMarkInArrList(ArrayList<Integer> marks) {
         double average = 0;
-        for(int mark : marks)
+        for (int mark : marks)
             average += mark;
 
-        return average/marks.size();
+        return average / marks.size();
     }
 
     @Override
